@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_batch_payment_search" model="ir.ui.view">
+      <field name="name">account.batch.payment.search</field>
+      <field name="model">account.batch.payment</field>
+      <field name="inherit_id" ref="account_batch_payment.view_batch_payment_search"/>
+      <field name="arch" type="xml">
+        <xpath expr="//filter[@name='open']" position="after">
+          <filter string="Bank" domain="[('journal_id','!=','False')]" name="journal_id"/>
+        </xpath>
+      </field>
+     </record>
+  </data>
+</odoo>

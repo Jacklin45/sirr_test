@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_hr_payslip_form_hoydays" model="ir.ui.view">
+        <field name="name">hr.payslip.form.with.holidays</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+        	<field name="is_superuser" position="after">
+        		<field name="total_allocation_holidays" invisible="1"/>
+        		<field name="taken_holidays" invisible="1"/>
+        		<field name="taken_cef" invisible="1"/>
+        		<field name="total_cef" invisible="1"/>
+        	</field> 
+        </field>
+    </record>
+</odoo>

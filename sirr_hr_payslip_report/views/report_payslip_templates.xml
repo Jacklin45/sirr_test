@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="payslip_external_layout_standard">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <div>
+                <!-- <span class="col-3 mb4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:45pt;max-width:90%" alt="Logo"/>
+                </span>
+    			<span style="float:right;">
+    				<b>NIF: </b><span t-field="user.company_id.partner_id.nif"/><br/>
+    				<b>STAT: </b><span t-field="user.company_id.partner_id.stat"/><br/>
+    				<b>ADDRESSE: </b><span t-field="user.company_id.partner_id.street"/><br t-if="user.company_id.partner_id.street2"/>
+    				<span t-field="user.company_id.partner_id.street2"/><br t-if="user.company_id.partner_id.city or user.company_id.partner_id.state_id or user.company_id.partner_id.zip"/>
+    				<span t-if="user.company_id.partner_id.city" t-field="user.company_id.partner_id.city"/>
+    				<span t-if="user.company_id.partner_id.state_id" t-field="user.company_id.partner_id.state_id.name"/>
+    				<span t-if="user.company_id.partner_id.zip" t-field="user.company_id.partner_id.zip"/><br t-if="user.company_id.partner_id.country_id"/>
+    				<span t-if="user.company_id.partner_id.country_id" t-field="user.company_id.partner_id.country_id.name"/>
+    			</span> -->
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-5">
+            	<!-- This div ensures that the address is not cropped by the header. -->
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-raw="0"/>
+        </div>
+
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <div t-if="report_type == 'pdf'" class="text-muted" style="margin-top: 20px;">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
+	
+	<template id="payslip_external_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-call="sirr_hr_payslip_report.payslip_external_layout_standard"><t t-raw="0"/></t>
+
+    </template>
+
+	<template id="report_payslip_new">
+	    <t t-call="web.html_container">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="sirr_hr_payslip_report.payslip_external_layout">
+	                <div class="page" style="font-size: 10pt;">
+	                	<div style='overflow:hidden'>
+		                	<span class="col-3 mb4">
+			                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height:45pt;max-width:90%" alt="Logo"/>
+			                </span>
+			    			<span style="float:right;">
+			    				<strong>NIF: </strong><span t-field="user.company_id.nif"/><br/>
+			    				<strong>STAT: </strong><span t-field="user.company_id.stat"/><br/>
+			    				<b>ADRESSE: </b><span t-field="user.company_id.partner_id.street"/><br t-if="user.company_id.partner_id.street2"/>
+			    				<span t-field="user.company_id.partner_id.street2"/><br t-if="user.company_id.partner_id.city or user.company_id.partner_id.state_id or user.company_id.partner_id.zip"/>
+			    				<span t-if="user.company_id.partner_id.city" t-field="user.company_id.partner_id.city"/>
+			    				<span t-if="user.company_id.partner_id.state_id" t-field="user.company_id.partner_id.state_id.name"/>
+			    				<span t-if="user.company_id.partner_id.zip" t-field="user.company_id.partner_id.zip"/><br t-if="user.company_id.partner_id.country_id"/>
+			    				<span t-if="user.company_id.partner_id.country_id" t-field="user.company_id.partner_id.country_id.name"/>
+			    			</span>
+			    		</div>
+	                    <strong style="text-align: center; clear: both; display:block; margin-top: 15px;margin-bottom: 25px; font-size: 13pt;">BULLETIN DE PAIE</strong>
+	                    <div style='overflow:hidden'>
+		                    <span style="float: left; margin-bottom: 15px;">
+			                    <div>
+			                        Mr/Mme: <span t-field="o.employee_id"></span>
+			                    </div>
+			                    <div>
+			                        Date d'embauche: <span t-field="o.contract_id.date_start"></span>
+			                    </div>
+			                    <div>
+			                        CIN: <span t-field="o.employee_id.identification_id"></span>
+			                    </div>
+			                    <div>
+			                        CNaPS: <span t-field="o.employee_id.cnaps_number"></span>
+			                    </div>
+			                    <div>
+			                        Emploi: <span t-field="o.contract_id.job_id"></span>
+			                    </div>
+			                    <div>
+			                        Classification: <span t-field="o.contract_id.internal_classification"></span>
+			                    </div>
+			                    <div>
+			                        Nombre d'enfant à charge: <span t-field="o.employee_id.children"></span>
+			                    </div>
+			                </span>
+			                <span style="float:right;width: 35%">
+			                    <div>
+			                        <strong>Période: <span t-field="o.date_from"/> - <span t-field="o.date_to"/></strong>
+			                    </div>
+			                    <div>
+			                        Paiement: <span t-field="o.contract_id.payslip_payment_mode_id"></span>
+			                    </div>
+			                    <table style="width: 100%; margin-top: 25px;">
+			                    	<tr>
+			                            <td></td>
+			                            <td style="border: 1px solid black;black;padding-left: 5px;padding-right: 5px;"><strong>Pris (m)</strong></td>
+			                            <td style="border: 1px solid black;black;padding-left: 5px;padding-right: 5px;"><strong>Solde (m)</strong></td>
+			                        </tr>
+			                        <tr>
+			                            <td style="background: #c3c7c4;;border: 1px solid black;black;padding-left: 5px;padding-right: 5px;"><strong>Congé</strong></td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.taken_holidays"/></td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.total_allocation_holidays"/></td>
+			                        </tr>
+			                        <tr>
+			                            <td  style="background: #c3c7c4;;border: 1px solid black;padding-left: 5px;padding-right: 5px;">CEF</td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.taken_cef"/></td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.total_cef"/></td>
+			                        </tr>
+			                    </table>
+			               </span>
+			          </div>
+	                    
+	                <br/>
+
+	             	<table style="width: 100%;border: 1px solid black;border-collapse: collapse;">
+						<thead class="text-center font-weight-bold" style="background: #c3c7c4;">
+							<tr class="text-center font-weight-bold">
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Désignation</th>
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Nombre</th>
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Base</th>
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Taux</th>
+								<th colspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Montant</th>
+							</tr>
+							<tr>
+		                        <th style="border: 1px solid black;;padding-left: 5px;padding-right: 5px;"><strong>Gain</strong></th>
+		                        <th style="border: 1px solid black;;padding-left: 5px;padding-right: 5px;"><strong>Retenu</strong></th>
+		                    </tr>
+						</thead>
+						<tbody>
+							<!-- Impossable à l'IRSA -->
+							<t t-set="total_brut_gain" t-value="0"/>
+							<t t-set="total_brut_retenu" t-value="0"/>
+							<t t-set="hourly_rate" t-value="0"/>
+							<t t-set="salary_brut" t-value="0"/>
+							<t t-set="taux_maladie1" t-value="0"/>
+							<t t-set="taux_maladie2" t-value="0"/>
+							<t t-set="taux_sante" t-value="0"/>
+							<t t-set="taux_cnaps" t-value="0"/>
+							
+							<t t-set="taux_cnaps_pat" t-value="0"/>
+							<t t-set="taux_sante_pat" t-value="0"/>
+							<t t-set="total_brut" t-value="0"/>
+							<t t-set="brut" t-value="0"/>
+							
+							<span t-foreach="o.line_ids" t-as="line">
+								<t t-if="line.salary_rule_id.code == 'TH'">
+									<t t-set="hourly_rate" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'BRUT'">
+									<t t-set="salary_brut" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'TAUX_ASSURANCE1'">
+									<t t-set="taux_maladie1" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'TAUX_ASSURANCE1'">
+									<t t-set="taux_maladie2" t-value="line.total"/>
+								</t>
+								
+								<t t-if="line.salary_rule_id.code in ('TAUX_OSTIE','TAUX_OMSI_TAM','TAUX_OMIT','TAUX_OMINO_NB','TAUX_OMINO_MANAK','TAUX_SMIMO_MRMG','TAUX_OSIEM_MAJ','TAUX_SMIDS_DG','TAUX_OSIEF_FI','TAUX_SMIA_ANTS')">
+									<t t-set="taux_sante" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'TAUX_CNAPS'">
+									<t t-set="taux_cnaps" t-value="line.total"/>
+								</t>
+								
+								<t t-if="line.salary_rule_id.code == 'TAUX_CNAPS_PAT'">
+									<t t-set="taux_cnaps_pat" t-value="line.total"/>
+								</t>
+								
+								<t t-if="line.salary_rule_id.code in ('TAUX_OSTIE_PAT','TAUX_OMSI_PAT_TAM','TAUX_PAT_OMIT','TAUX_PAT_OMINO_NB','TAUX_PAT_OMINO_MANAK','TAUX_PAT_SMIMO_MRMG','TAUX_PAT_OSIEM_MAJ','TAUX_PAT_SMIDS_DG','TAUX_PAT_OSIEF_FI','TAUX_PAT_SMIA_ANTS')">
+									<t t-set="taux_sante_pat" t-value="line.total"/>
+								</t>
+							</span>
+							
+							<span t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+								<t t-if="line.salary_rule_id.code != 'ALLOC_FAM' and line.category_id.code not in ('AVANCE','ALLOC_NI','AVC_QUINZAINE','AVC_SPEC','AVC_SCO','RET_COMP','PRIME_DEP') and line.total != 0">
+									<t t-if="line.salary_rule_id.code == 'BRUT'">
+										<!-- Total Brut-->
+										<tr>
+											<td class="text-center" style="border-right: 1px solid black;font-weight: bold;">Total Brut</td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+											<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;border-top: 1px solid black;border-bottom: 1px solid black;font-weight: bold;"><t t-esc="'{:,.2f}'.format(line.amount).replace(',',' ').replace('.',',')"/></td>
+											<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-top: 1px solid black;border-bottom: 1px solid black;"></td>
+											<t t-set="total_brut" t-value="line.amount"/>
+											<t t-set="brut" t-value="1"/>
+										</tr>
+									</t>
+									<t t-else="">
+										<tr>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="line.name"/></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: center;">
+												<t t-if="line.category_id.code == 'BASIC_SIRH'">30</t>
+											</td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+												<t t-if="line.category_id.code == 'BASIC_SIRH'">
+													<t t-esc="'{:,.2f}'.format(o.contract_id.wage/30).replace(',',' ').replace('.',',')"/>
+												</t>
+												<t t-if="line.salary_rule_id.code == 'HS_130'">
+													<t t-esc="'{:,.2f}'.format(hourly_rate * 1.3).replace(',',' ').replace('.',',')"/>
+												</t>
+												<t t-if="line.salary_rule_id.code == 'HS_150'">
+													<t t-esc="'{:,.2f}'.format(hourly_rate * 1.5).replace(',',' ').replace('.',',')"/>
+												</t>
+											</td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: center;">
+												<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2','CNAPS','OSTIE')">
+													<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','CNAPS')">
+														<t t-esc="taux_cnaps"/>%
+													</t>
+													<t t-if="line.salary_rule_id.code == 'SANTE'">
+														<t t-esc="taux_sante"/>%
+													</t>
+													<t t-if="line.salary_rule_id.code == 'MALADIE1'">
+														<t t-esc="taux_maladie1"/>%
+													</t>
+													<t t-if="line.salary_rule_id.code == 'MALADIE2'">
+														<t t-esc="taux_maladie2"/>%
+													</t>
+												</t>
+												<t t-if="line.salary_rule_id.code in ('OSTIE','OMSI_TAM','OMIT','OMINO_NB','OMINO_MANAK','SMIMO_MRMG','OSIEM_MAJ','SMIDS_DG','OSIEF_FI','SMIA_ANTS')">
+													<t t-esc="taux_sante"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'CNAPS_PAT'">
+													<t t-esc="taux_cnaps_pat"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code in ('OSTIE_PAT','OMSI_PAT_TAM','PAT_OMIT','PAT_OMINO_NB','PAT_OMINO_MANAK','PAT_SMIMO_MRMG','PAT_OSIEM_MAJ','PAT_SMIDS_DG','PAT_OSIEF_FI','PAT_SMIA_ANTS')">
+													<t t-esc="taux_sante_pat"/>%
+												</t>
+											</td>
+											<td style="padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;"><t t-if="line.salary_rule_id.type == 'gain'"><t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/></t></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-if="line.salary_rule_id.type == 'retenu'"><t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/></t></td>
+										</tr>
+										<t t-if="brut == 1">
+											<t t-if="line.salary_rule_id.type == 'gain'">
+											<t t-set="total_brut_gain" t-value="total_brut_gain+line.total"/>
+											</t>
+											<t t-if="line.salary_rule_id.type == 'retenu'">
+												<t t-set="total_brut_retenu" t-value="total_brut_retenu+line.total"/>
+											</t>
+										</t>
+								</t>
+									</t>
+									
+							</span>
+							
+							<!-- Total retenu -->
+							<t t-if="(total_brut_gain+total_brut_retenu) > 0">
+								<tr>
+									<td style="text-align: center;border-right: 1px solid black;padding-left: 5px;padding-right: 5px;font-weight: bold;">Total retenu</td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;font-weight: bold;border-top: 1px solid black;border-bottom: 1px solid black;"><t t-esc="'{:,.2f}'.format(total_brut_gain).replace(',',' ').replace('.',',')"/></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;font-weight: bold;border-top: 1px solid black;border-bottom: 1px solid black;"><t t-esc="'{:,.2f}'.format(total_brut_retenu).replace(',',' ').replace('.',',')"/></td>
+								</tr>
+							</t>
+							
+							<t t-set="total_retenu_retenu" t-value="0"/>
+							<t t-set="total_retenu_gain" t-value="0"/>
+							<span t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+								<t t-if="(line.salary_rule_id.code == 'ALLOC_FAM' or line.category_id.code in ('AVANCE','ALLOC_NI','AVC_QUINZAINE','AVC_SPEC','AVC_SCO','RET_COMP','PRIME_DEP')) and line.total != 0">
+									<tr>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="line.name"/></td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+											<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2')">
+												<t t-esc="'{:,.2f}'.format(salary_brut).replace(',',' ').replace('.',',')"/>
+											</t>
+										</td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+											<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2','CNAPS')">
+												<t t-esc="'{:,.2f}'.format(total_brut_gain).replace(',',' ').replace('.',',')"/>
+											</t>
+										</td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: center;">
+											<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2','CNAPS','OSTIE')">
+												<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','CNAPS')">
+													<t t-esc="taux_cnaps"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'SANTE'">
+													<t t-esc="taux_sante"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'OSIE'">
+														<t t-esc="taux_ostie"/>%
+													</t>
+												<t t-if="line.salary_rule_id.code == 'MALADIE1'">
+													<t t-esc="taux_maladie1"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'MALADIE2'">
+													<t t-esc="taux_maladie2"/>%
+												</t>
+											</t>
+											<t t-if="line.salary_rule_id.code in ('OSTIE','OMSI_TAM','OMIT','OMINO_NB','OMINO_MANAK','SMIMO_MRMG','OSIEM_MAJ','SMIDS_DG','OSIEF_FI','SMIA_ANTS')">
+												<t t-esc="taux_sante"/>%
+											</t>
+										</td>
+										<td style="padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;"><t t-if="line.salary_rule_id.type == 'gain'">
+											<t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/></t>
+										</td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+											<t t-if="line.salary_rule_id.type == 'retenu'">
+												<t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/>
+											</t>
+										</td>
+									</tr>
+									<t t-if="line.salary_rule_id.type == 'retenu'">
+										<t t-set="total_retenu_retenu" t-value="total_retenu_retenu+line.total"/>
+									</t>
+									<t t-if="line.salary_rule_id.type == 'gain'">
+										<t t-set="total_retenu_gain" t-value="total_retenu_gain+line.total"/>
+									</t>
+								</t>
+							</span>
+							
+							<!-- Total Non imposable -->
+							<t t-if="(total_retenu_gain+total_retenu_retenu) > 0">
+								<tr>
+									<td class="text-center" style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;font-weight: bold;">Total non imposable</td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-top: 1px solid blaOTk;padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;font-weight: bold;border-top: 1px solid black;border-bottom: 1px solid black;"><t t-esc="'{:,.2f}'.format(total_retenu_gain).replace(',',' ').replace('.',',')"/></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;font-weight: bold;border-top: 1px solid black;border-top: 1px bottom black;"><t t-esc="'{:,.2f}'.format(total_retenu_retenu).replace(',',' ').replace('.',',')"/></td>
+								</tr>
+							</t>
+						</tbody>
+					</table>
+					
+					<t t-set="salaire_brut" t-value="0"/>
+					<t t-set="net_imposable" t-value="0"/>
+					<t t-set="cotisation_employee" t-value="0"/>
+					<t t-set="net_paye" t-value="0"/>
+					<span t-foreach="o.line_ids" t-as="line">
+						<t t-if="line.salary_rule_id.code == 'BRUT'">
+							<t t-set="salaire_brut" t-value="salaire_brut+line.total"/>
+						</t>
+						<t t-if="line.salary_rule_id.code == 'MI_HSE_20'">
+							<t t-set="net_imposable" t-value="net_imposable+line.total"/>
+						</t>
+						<t t-if="line.category_id.code == 'PATRONAL'">
+							<t t-set="cotisation_employee" t-value="cotisation_employee+line.total"/>
+						</t>
+						<t t-if="line.salary_rule_id.code == 'NET'">
+							<t t-set="net_paye" t-value="net_paye+line.total"/>
+						</t>
+					</span>
+					
+					<div style="overflow:hidden; margin-top: 10px;">
+						<span style="float:left; width: 80%">
+							<table style="width: 100%;border: 1px solid black;border-collapse: collapse;">
+								<thead class="text-center font-weight-bold">
+									<tr class="text-center font-weight-bold">
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Salaire brut</th>
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Net imposable</th>
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Cotisation employeur</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(salaire_brut).replace(',',' ').replace('.',',')"/></td>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(net_imposable).replace(',',' ').replace('.',',')"/></td>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(cotisation_employee).replace(',',' ').replace('.',',')"/></td>
+				                    </tr>
+								</tbody>
+							</table>
+						</span>
+						<span style="float:right;width: 20%">
+							<table style="width: 100%;border: 1px solid black;border-collapse: collapse;">
+								<thead class="text-center font-weight-bold" style="background: #c3c7c4;">
+									<tr class="text-center font-weight-bold">
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Net à payer</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(net_paye).replace(',',' ').replace('.',',')"/></td>
+				                    </tr>
+								</tbody>
+							</table>
+						</span>
+					</div>
+					
+					
+					<div style="overflow:hidden;margin-top: 15px;">
+						<span style="float:left;">La direction des ressources humaines</span>
+			            <span style="float:right;margin-right: 20px;"><u>Employé</u></span>
+					</div>
+					
+					<div style="overflow:hidden;margin-top: 70px;">
+						<span style="float:left;margin-left: 60px;">Ikram Ameur</span>
+			            <span style="float:right;">Nom et prénom</span>
+					</div>
+		                
+	                <div style="margin-top: 15px;">
+	                  <strong>Pour faire valoir vos droits, conservez ce bulletin de paie sans limitation de durée</strong>
+	                  <br/>
+	                  <!-- <div>
+	                    <strong>* Net imposable = </strong>
+	                    Salaire brut - Cnaps &amp; Assurance santé
+	                  </div> -->
+	                  <div>
+	                    <strong>* IRSA = </strong>
+	                    Net Imposable * % défini selon la tranche
+	                  </div>
+	                  <div>
+	                    <strong>* Net à payer = </strong>
+	                    Salaire brut - Total retenu (+ /-) Total non imposable
+	                  </div>
+	                </div>
+		           </div>
+	            </t>
+	        </t>
+	    </t>
+	</template>
+	
+	<!-- STC -->
+	<template id="report_payslip_new_stc">
+	    <t t-call="web.html_container">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="sirr_hr_payslip_report.payslip_external_layout">
+	                <div class="page" style="font-size: 10pt;">
+	                	<div style='overflow:hidden'>
+		                	<span class="col-3 mb4">
+			                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height:45pt;max-width:90%" alt="Logo"/>
+			                </span>
+			    			<span style="float:right;">
+			    				<strong>NIF: </strong><span t-field="user.company_id.partner_id.nif"/><br/>
+			    				<strong>STAT: </strong><span t-field="user.company_id.partner_id.stat"/><br/>
+			    				<b>ADDRESSE: </b><span t-field="user.company_id.partner_id.street"/><br t-if="user.company_id.partner_id.street2"/>
+			    				<span t-field="user.company_id.partner_id.street2"/><br t-if="user.company_id.partner_id.city or user.company_id.partner_id.state_id or user.company_id.partner_id.zip"/>
+			    				<span t-if="user.company_id.partner_id.city" t-field="user.company_id.partner_id.city"/>
+			    				<span t-if="user.company_id.partner_id.state_id" t-field="user.company_id.partner_id.state_id.name"/>
+			    				<span t-if="user.company_id.partner_id.zip" t-field="user.company_id.partner_id.zip"/><br t-if="user.company_id.partner_id.country_id"/>
+			    				<span t-if="user.company_id.partner_id.country_id" t-field="user.company_id.partner_id.country_id.name"/>
+			    			</span>
+			    		</div>
+	                    <strong style="text-align: center; clear: both; display:block; margin-top: 15px;margin-bottom: 25px; font-size: 13pt;">SOLDE DE TOUT COMPTE</strong>
+	                    <div style='overflow:hidden'>
+		                    <span style="float: left; margin-bottom: 15px;">
+			                    <div>
+			                        Mr/Mme: <span t-field="o.employee_id"></span>
+			                    </div>
+			                    <div>
+			                        Date d'embauche: <span t-field="o.contract_id.date_start"></span>
+			                    </div>
+			                    <div>
+			                        CIN: <span t-field="o.employee_id.identification_id"></span>
+			                    </div>
+			                    <div>
+			                        CNaPS: <span t-field="o.employee_id.cnaps_number"></span>
+			                    </div>
+			                    <div>
+			                        Emploi: <span t-field="o.contract_id.job_id"></span>
+			                    </div>
+			                    <div>
+			                        Classification: <span t-field="o.contract_id.internal_classification"></span>
+			                    </div>
+			                    <div>
+			                        Nombre d'enfant à charge: <span t-field="o.employee_id.children"></span>
+			                    </div>
+			                </span>
+			                <span style="float:right;width: 35%">
+			                    <div>
+			                        <strong>Période: <span t-field="o.date_from"/> - <span t-field="o.date_to"/></strong>
+			                    </div>
+			                    <div>
+			                        Paiement: <span t-field="o.contract_id.payslip_payment_mode_id"></span>
+			                    </div>
+			                    <table style="width: 100%; margin-top: 25px;">
+			                    	<tr>
+			                            <td></td>
+			                            <td style="border: 1px solid black;black;padding-left: 5px;padding-right: 5px;"><strong>Pris (m)</strong></td>
+			                            <td style="border: 1px solid black;black;padding-left: 5px;padding-right: 5px;"><strong>Solde (m)</strong></td>
+			                        </tr>
+			                        <tr>
+			                            <td style="background: #c3c7c4;;border: 1px solid black;black;padding-left: 5px;padding-right: 5px;"><strong>Congé</strong></td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.taken_holidays"/></td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.total_allocation_holidays"/></td>
+			                        </tr>
+			                        <tr>
+			                            <td  style="background: #c3c7c4;;border: 1px solid black;padding-left: 5px;padding-right: 5px;">CEF</td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.taken_cef"/></td>
+			                            <td  style="border: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="o.total_cef"/></td>
+			                        </tr>
+			                    </table>
+			               </span>
+			          </div>
+	                    
+	                <br/>
+
+	             	<table style="width: 100%;border: 1px solid black;border-collapse: collapse;">
+						<thead class="text-center font-weight-bold" style="background: #c3c7c4;">
+							<tr class="text-center font-weight-bold">
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Désignation</th>
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Nombre</th>
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Base</th>
+								<th rowspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;vertical-align : middle;">Taux</th>
+								<th colspan="2" class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Montant</th>
+							</tr>
+							<tr>
+		                        <th style="border: 1px solid black;;padding-left: 5px;padding-right: 5px;"><strong>Gain</strong></th>
+		                        <th style="border: 1px solid black;;padding-left: 5px;padding-right: 5px;"><strong>Retenu</strong></th>
+		                    </tr>
+						</thead>
+						<tbody>
+							<!-- Impossable à l'IRSA -->
+							<t t-set="total_brut_gain" t-value="0"/>
+							<t t-set="total_brut_retenu" t-value="0"/>
+							<t t-set="hourly_rate" t-value="0"/>
+							<t t-set="salary_brut" t-value="0"/>
+							<t t-set="taux_maladie1" t-value="0"/>
+							<t t-set="taux_maladie2" t-value="0"/>
+							<t t-set="taux_sante" t-value="0"/>
+							<t t-set="taux_cnaps" t-value="0"/>
+							
+							<t t-set="taux_cnaps_pat" t-value="0"/>
+							<t t-set="taux_sante_pat" t-value="0"/>
+							<t t-set="total_brut" t-value="0"/>
+							<t t-set="brut" t-value="0"/>
+							
+							<span t-foreach="o.line_ids" t-as="line">
+								<t t-if="line.salary_rule_id.code == 'TH'">
+									<t t-set="hourly_rate" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'BRUT'">
+									<t t-set="salary_brut" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'TAUX_ASSURANCE1'">
+									<t t-set="taux_maladie1" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'TAUX_ASSURANCE1'">
+									<t t-set="taux_maladie2" t-value="line.total"/>
+								</t>
+								
+								<t t-if="line.salary_rule_id.code in ('TAUX_OSTIE','TAUX_OMSI_TAM','TAUX_OMIT','TAUX_OMINO_NB','TAUX_OMINO_MANAK','TAUX_SMIMO_MRMG','TAUX_OSIEM_MAJ','TAUX_SMIDS_DG','TAUX_OSIEF_FI','TAUX_SMIA_ANTS')">
+									<t t-set="taux_sante" t-value="line.total"/>
+								</t>
+								<t t-if="line.salary_rule_id.code == 'TAUX_CNAPS'">
+									<t t-set="taux_cnaps" t-value="line.total"/>
+								</t>
+								
+								<t t-if="line.salary_rule_id.code == 'TAUX_CNAPS_PAT'">
+									<t t-set="taux_cnaps_pat" t-value="line.total"/>
+								</t>
+								
+								<t t-if="line.salary_rule_id.code in ('TAUX_OSTIE_PAT','TAUX_OMSI_PAT_TAM','TAUX_PAT_OMIT','TAUX_PAT_OMINO_NB','TAUX_PAT_OMINO_MANAK','TAUX_PAT_SMIMO_MRMG','TAUX_PAT_OSIEM_MAJ','TAUX_PAT_SMIDS_DG','TAUX_PAT_OSIEF_FI','TAUX_PAT_SMIA_ANTS')">
+									<t t-set="taux_sante_pat" t-value="line.total"/>
+								</t>
+							</span>
+							
+							<span t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+								<t t-if="line.salary_rule_id.code != 'ALLOC_FAM' and line.category_id.code not in ('AVANCE','ALLOC_NI','AVC_QUINZAINE','AVC_SPEC','AVC_SCO','RET_COMP','PRIME_DEP') and line.total != 0">
+									<t t-if="line.salary_rule_id.code == 'BRUT'">
+										<!-- Total Brut-->
+										<tr>
+											<td class="text-center" style="border-right: 1px solid black;font-weight: bold;">Total Brut</td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+											<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;border-top: 1px solid black;border-bottom: 1px solid black;font-weight: bold;"><t t-esc="'{:,.2f}'.format(line.amount).replace(',',' ').replace('.',',')"/></td>
+											<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-top: 1px solid black;border-bottom: 1px solid black;"></td>
+											<t t-set="total_brut" t-value="line.amount"/>
+											<t t-set="brut" t-value="1"/>
+										</tr>
+									</t>
+									<t t-else="">
+										<tr>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="line.name"/></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: center;">
+												<t t-if="line.category_id.code == 'BASIC_SIRH'">30</t>
+											</td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+												<t t-if="line.category_id.code == 'BASIC_SIRH'">
+													<t t-esc="'{:,.2f}'.format(o.contract_id.wage/30).replace(',',' ').replace('.',',')"/>
+												</t>
+												<t t-if="line.salary_rule_id.code == 'HS_130'">
+													<t t-esc="'{:,.2f}'.format(hourly_rate * 1.3).replace(',',' ').replace('.',',')"/>
+												</t>
+												<t t-if="line.salary_rule_id.code == 'HS_150'">
+													<t t-esc="'{:,.2f}'.format(hourly_rate * 1.5).replace(',',' ').replace('.',',')"/>
+												</t>
+											</td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: center;">
+												<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2','CNAPS','OSTIE')">
+													<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','CNAPS')">
+														<t t-esc="taux_cnaps"/>%
+													</t>
+													<t t-if="line.salary_rule_id.code == 'SANTE'">
+														<t t-esc="taux_sante"/>%
+													</t>
+													<t t-if="line.salary_rule_id.code == 'MALADIE1'">
+														<t t-esc="taux_maladie1"/>%
+													</t>
+													<t t-if="line.salary_rule_id.code == 'MALADIE2'">
+														<t t-esc="taux_maladie2"/>%
+													</t>
+												</t>
+												<t t-if="line.salary_rule_id.code in ('OSTIE','OMSI_TAM','OMIT','OMINO_NB','OMINO_MANAK','SMIMO_MRMG','OSIEM_MAJ','SMIDS_DG','OSIEF_FI','SMIA_ANTS')">
+													<t t-esc="taux_sante"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'CNAPS_PAT'">
+													<t t-esc="taux_cnaps_pat"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code in ('OSTIE_PAT','OMSI_PAT_TAM','PAT_OMIT','PAT_OMINO_NB','PAT_OMINO_MANAK','PAT_SMIMO_MRMG','PAT_OSIEM_MAJ','PAT_SMIDS_DG','PAT_OSIEF_FI','PAT_SMIA_ANTS')">
+													<t t-esc="taux_sante_pat"/>%
+												</t>
+											</td>
+											<td style="padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;"><t t-if="line.salary_rule_id.type == 'gain'"><t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/></t></td>
+											<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-if="line.salary_rule_id.type == 'retenu'"><t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/></t></td>
+										</tr>
+										<t t-if="brut == 1">
+											<t t-if="line.salary_rule_id.type == 'gain'">
+											<t t-set="total_brut_gain" t-value="total_brut_gain+line.total"/>
+											</t>
+											<t t-if="line.salary_rule_id.type == 'retenu'">
+												<t t-set="total_brut_retenu" t-value="total_brut_retenu+line.total"/>
+											</t>
+										</t>
+								</t>
+									</t>
+									
+							</span>
+							
+							<!-- Total retenu -->
+							<t t-if="(total_brut_gain+total_brut_retenu) > 0">
+								<tr>
+									<td class="text-center" style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;font-weight: bold;">Total retenu</td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;font-weight: bold;border-top: 1px solid black;border-bottom: 1px solid black;"><t t-esc="'{:,.2f}'.format(total_brut_gain).replace(',',' ').replace('.',',')"/></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;font-weight: bold;border-top: 1px solid black;border-bottom: 1px solid black;"><t t-esc="'{:,.2f}'.format(total_brut_retenu).replace(',',' ').replace('.',',')"/></td>
+								</tr>
+							</t>
+							
+							<t t-set="total_retenu_retenu" t-value="0"/>
+							<t t-set="total_retenu_gain" t-value="0"/>
+							<span t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+								<t t-if="(line.salary_rule_id.code == 'ALLOC_FAM' or line.category_id.code in ('AVANCE','ALLOC_NI','AVC_QUINZAINE','AVC_SPEC','AVC_SCO','RET_COMP','PRIME_DEP')) and line.total != 0">
+									<tr>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"><t t-esc="line.name"/></td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+											<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2')">
+												<t t-esc="'{:,.2f}'.format(salary_brut).replace(',',' ').replace('.',',')"/>
+											</t>
+										</td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+											<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2','CNAPS')">
+												<t t-esc="'{:,.2f}'.format(total_brut_gain).replace(',',' ').replace('.',',')"/>
+											</t>
+										</td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: center;">
+											<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','SANTE','MALADIE1','MALADIE2','CNAPS','OSTIE')">
+												<t t-if="line.salary_rule_id.code in ('REGUL_CNAPS','CNAPS')">
+													<t t-esc="taux_cnaps"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'SANTE'">
+													<t t-esc="taux_sante"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'OSIE'">
+														<t t-esc="taux_ostie"/>%
+													</t>
+												<t t-if="line.salary_rule_id.code == 'MALADIE1'">
+													<t t-esc="taux_maladie1"/>%
+												</t>
+												<t t-if="line.salary_rule_id.code == 'MALADIE2'">
+													<t t-esc="taux_maladie2"/>%
+												</t>
+											</t>
+											<t t-if="line.salary_rule_id.code in ('OSTIE','OMSI_TAM','OMIT','OMINO_NB','OMINO_MANAK','SMIMO_MRMG','OSIEM_MAJ','SMIDS_DG','OSIEF_FI','SMIA_ANTS')">
+												<t t-esc="taux_sante"/>%
+											</t>
+										</td>
+										<td style="padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;"><t t-if="line.salary_rule_id.type == 'gain'">
+											<t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/></t>
+										</td>
+										<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;">
+											<t t-if="line.salary_rule_id.type == 'retenu'">
+												<t t-esc="'{:,.2f}'.format(line.total).replace(',',' ').replace('.',',')"/>
+											</t>
+										</td>
+									</tr>
+									<t t-if="line.salary_rule_id.type == 'retenu'">
+										<t t-set="total_retenu_retenu" t-value="total_retenu_retenu+line.total"/>
+									</t>
+									<t t-if="line.salary_rule_id.type == 'gain'">
+										<t t-set="total_retenu_gain" t-value="total_retenu_gain+line.total"/>
+									</t>
+								</t>
+							</span>
+							
+							<!-- Total Non imposable -->
+							<t t-if="(total_retenu_gain+total_retenu_retenu) > 0">
+								<tr>
+									<td style="text-align: center;border-right: 1px solid black;padding-left: 5px;padding-right: 5px;font-weight: bold;">Total non imposable</td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-right: 1px solid black;padding-left: 5px;padding-right: 5px;"></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;border-right: 1px solid black;font-weight: bold;border-top: 1px solid black;border-bottom: 1px solid black;"><t t-esc="'{:,.2f}'.format(total_retenu_gain).replace(',',' ').replace('.',',')"/></td>
+									<td style="border-top: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;font-weight: bold;border-top: 1px solid black;border-top: 1px bottom black;"><t t-esc="'{:,.2f}'.format(total_retenu_retenu).replace(',',' ').replace('.',',')"/></td>
+								</tr>
+							</t>
+						</tbody>
+					</table>
+					
+					<t t-set="salaire_brut" t-value="0"/>
+					<t t-set="net_imposable" t-value="0"/>
+					<t t-set="cotisation_employee" t-value="0"/>
+					<t t-set="net_paye" t-value="0"/>
+					<span t-foreach="o.line_ids" t-as="line">
+						<t t-if="line.salary_rule_id.code == 'BRUT'">
+							<t t-set="salaire_brut" t-value="salaire_brut+line.total"/>
+						</t>
+						<t t-if="line.salary_rule_id.code == 'MI_HSE_20'">
+							<t t-set="net_imposable" t-value="net_imposable+line.total"/>
+						</t>
+						<t t-if="line.category_id.code == 'PATRONAL'">
+							<t t-set="cotisation_employee" t-value="cotisation_employee+line.total"/>
+						</t>
+						<t t-if="line.salary_rule_id.code == 'NET'">
+							<t t-set="net_paye" t-value="net_paye+line.total"/>
+						</t>
+					</span>
+					
+					<div style="overflow:hidden; margin-top: 10px;">
+						<span style="float:left; width: 80%">
+							<table style="width: 100%;border: 1px solid black;border-collapse: collapse;">
+								<thead class="text-center font-weight-bold">
+									<tr class="text-center font-weight-bold">
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Salaire brut</th>
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Net imposable</th>
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Cotisation employeur</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(salaire_brut).replace(',',' ').replace('.',',')"/></td>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(net_imposable).replace(',',' ').replace('.',',')"/></td>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(cotisation_employee).replace(',',' ').replace('.',',')"/></td>
+				                    </tr>
+								</tbody>
+							</table>
+						</span>
+						<span style="float:right;width: 20%">
+							<table style="width: 100%;border: 1px solid black;border-collapse: collapse;">
+								<thead class="text-center font-weight-bold" style="background: #c3c7c4;">
+									<tr class="text-center font-weight-bold">
+										<th class="text-center font-weight-bold" style="border: 1px solid black;padding-left: 5px;padding-right: 5px;">Net à payer</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+				                        <td style="border: 1px solid black;padding-left: 5px;padding-right: 5px;text-align: right;"><t t-esc="'{:,.2f}'.format(net_paye).replace(',',' ').replace('.',',')"/></td>
+				                    </tr>
+								</tbody>
+							</table>
+						</span>
+					</div>
+					
+					<div style="overflow:hidden;margin-top: 15px;">
+						<span style="float:left;"><strong>La direction des ressources humaines</strong></span>
+			            <span style="float:right;margin-right: 20px;"><u>Employé</u></span>
+					</div>
+					
+					<div style="overflow:hidden;margin-top: 70px;">
+						<span style="float:left;margin-left: 60px;"><strong>Ikram Ameur</strong></span>
+			            <span style="float:right;"><strong>Nom et prénom</strong></span>
+					</div>
+		                
+	                <div style="margin-top: 15px;">
+	                  <strong>Pour faire valoir vos droits, conservez ce bulletin de paie sans limitation de durée</strong>
+	                  <br/>
+	                  <!-- <div>
+	                    <strong>* Net imposable = </strong>
+	                    Salaire brut - Cnaps &amp; Assurance santé
+	                  </div> -->
+	                  <div>
+	                    <strong>* IRSA = </strong>
+	                    Net Imposable * % défini selon la tranche
+	                  </div>
+	                  <div>
+	                    <strong>* Net à payer = </strong>
+	                    Salaire brut - Total retenu (+ /-) Total non imposable
+	                  </div>
+	                </div>
+		           </div>
+	            </t>
+	        </t>
+	    </t>
+	</template>
+</odoo>

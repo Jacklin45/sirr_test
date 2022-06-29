@@ -1,0 +1,401 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sirr_hr_payslip_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e-20210806\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-04 14:04+0000\n"
+"PO-Revision-Date: 2021-11-04 14:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sirr_hr_payslip_report
+#: model:ir.actions.report,print_report_name:sirr_hr_payslip_report.report_payslip
+msgid ""
+"'BULLETIN DE PAIE - %s - %s' % (object.employee_id.name, "
+"(object.name.split(\" - \")[2]).replace('/', ''))"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.actions.report,print_report_name:sirr_hr_payslip_report.report_payslip_stc
+msgid ""
+"'STC - %s - %s' % (object.employee_id.name, (object.name.split(\" - "
+"\")[2]).replace('/', ''))"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "30"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<br/>\n"
+"\t\t\t    \t\t\t\t<b>ADDRESSE: </b>"
+msgstr ""
+"<br/>\n"
+"\t\t\t    \t\t\t\t<b>ADRESSE: </b>"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+msgid ""
+"<br/>\n"
+"\t\t\t    \t\t\t\t<b>ADRESSE: </b>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<br/>\n"
+"\t\t\t    \t\t\t\t<strong>STAT: </strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<span style=\"float:left;\"><strong>La direction des ressources humaines</strong></span>\n"
+"\t\t\t            <span style=\"float:right;margin-right: 20px;\"><u>Employé</u></span>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+msgid ""
+"<span style=\"float:left;\">La direction des ressources humaines</span>\n"
+"\t\t\t            <span style=\"float:right;margin-right: 20px;\"><u>Employé</u></span>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<span style=\"float:left;margin-left: 60px;\"><strong>Ikram Ameur</strong></span>\n"
+"\t\t\t            <span style=\"float:right;\"><strong>Nom et prénom</strong></span>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+msgid ""
+"<span style=\"float:left;margin-left: 60px;\">Ikram Ameur</span>\n"
+"\t\t\t            <span style=\"float:right;\">Nom et prénom</span>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+msgid ""
+"<strong style=\"text-align: center; clear: both; display:block; margin-top: "
+"15px;margin-bottom: 15px; font-size: 13pt;\">BULLETIN DE PAIE</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<strong style=\"text-align: center; clear: both; display:block; margin-top: "
+"15px;margin-bottom: 15px; font-size: 13pt;\">SOLDE DE TOUT COMPTE</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<strong>* IRSA = </strong>\n"
+"\t                    Net Imposable * % défini selon la tranche"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<strong>* Net imposable = </strong>\n"
+"\t                    Salaire brut - Cnaps &amp; Assurance santé"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<strong>* Net à payer = </strong>\n"
+"\t                    Salaire brut - Total retenu (+ /-) Total non imposable"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "<strong>Congé</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "<strong>Gain</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "<strong>NIF: </strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid ""
+"<strong>Pour faire valoir vos droits, conservez ce bulletin de paie sans limitation de durée</strong>\n"
+"\t                  <br/>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "<strong>Pris (m)</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "<strong>Retenu</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "<strong>Solde (m)</strong>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Base"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields.selection,name:sirr_hr_payslip_report.selection__hr_leave_type__leave_sub_type__cef
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "CEF"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "CIN:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "CNaPS:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Classification:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Cotisation employeur"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Date d'embauche:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_leave_type__display_name
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip__display_name
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_salary_rule__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Désignation"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Emploi:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.actions.report,name:sirr_hr_payslip_report.report_payslip
+msgid "Fiche de paie"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields.selection,name:sirr_hr_payslip_report.selection__hr_salary_rule__type__gain
+msgid "Gain"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_leave_type__id
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip__id
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_salary_rule__id
+msgid "ID"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_leave_type____last_update
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip____last_update
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_salary_rule____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_leave_type__leave_sub_type
+msgid "Leave Sub Type"
+msgstr "Type de congé"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Logo"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Montant"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Mr/Mme:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Net imposable"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Net à payer"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Nombre"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Nombre d'enfant à charge:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.payslip_external_layout_standard
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields.selection,name:sirr_hr_payslip_report.selection__hr_leave_type__leave_sub_type__paid_leave
+msgid "Paid Leave"
+msgstr "Congé payé"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Paiement:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model,name:sirr_hr_payslip_report.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Feuille de paie"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Période:"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields.selection,name:sirr_hr_payslip_report.selection__hr_salary_rule__type__retenu
+msgid "Retenu"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.actions.report,name:sirr_hr_payslip_report.report_payslip_stc
+msgid "STC"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Salaire brut"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model,name:sirr_hr_payslip_report.model_hr_salary_rule
+msgid "Salary Rule"
+msgstr "Règles salariales"
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip__taken_cef
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip__taken_holidays
+msgid "Taken Holidays"
+msgstr "Congé pris"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Taux"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model,name:sirr_hr_payslip_report.model_hr_leave_type
+msgid "Time Off Type"
+msgstr "Type de congés"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Total"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Total Brut"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip__total_cef
+msgid "Total CEF"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_payslip__total_allocation_holidays
+msgid "Total Holidays"
+msgstr "Total Congés"
+
+#. module: sirr_hr_payslip_report
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new
+#: model_terms:ir.ui.view,arch_db:sirr_hr_payslip_report.report_payslip_new_stc
+msgid "Total déductions règlementaires"
+msgstr ""
+
+#. module: sirr_hr_payslip_report
+#: model:ir.model.fields,field_description:sirr_hr_payslip_report.field_hr_salary_rule__type
+msgid "Type"
+msgstr ""

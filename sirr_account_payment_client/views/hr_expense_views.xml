@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_hr_expense_sheet_form" model="ir.ui.view">
+      <field name="name">hr.expense.sheet.form</field>
+      <field name="model">hr.expense.sheet</field>
+      <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='action_register_payment']" position="replace">
+          <button name="action_register_payment"
+                            type="object"
+                            class="oe_highlight o_expense_sheet_pay"
+                            attrs="{'invisible': [('state', '!=', 'post')]}"
+                            context="{'dont_redirect_to_payments': True, 'model_active': 'hr.expense.sheet'}"
+                            string="Register Payment"
+                            groups="account.group_account_invoice"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>
